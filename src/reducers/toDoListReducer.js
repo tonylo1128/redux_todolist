@@ -28,6 +28,12 @@ export default function(state = initState, {type, payload}){
                 ...state,
                 theList: [...state.theList, { ...Item, theItem: payload } ]
             };
+        case TypeofToDoList.MAKEASDONE:
+            return{
+                ...state,
+            //     theList: state.theList.map((index, item) => (index === payload.index) ?{...payload.item, finishstate:1}: state.theList)
+            theList: state.theList.map((index, item) => (item == payload.item ) ? {...item, finishstate:1}: {...item, finishstate:1} ) 
+             }
         
         default:
             return state;
