@@ -22,3 +22,17 @@ export function makeAsDoneFun(index, item ) {
       payload: { index, item }
     };
   }
+
+  export function deleItemFun(item, index){
+    return{
+      type: todolistType.DELEITEM,
+      payload: {item, index}
+    }
+  }
+  
+  export function handleEditFun(item, index){
+    return{
+      type: todolistType.HANDLINGEDIT,
+      payload: {item, index}
+    }
+  }

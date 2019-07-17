@@ -6,13 +6,15 @@ const initState={
     theList:[],
     handleInputVar:"",
     
+    
 }
 
 
 export default function(state = initState, {type, payload}){
     const Item={
         theItem:"",
-        finishstate: 0
+        finishstate: 0,
+        handleUpdate: 0
     };
 
 
@@ -31,9 +33,21 @@ export default function(state = initState, {type, payload}){
         case TypeofToDoList.MAKEASDONE:
             return{
                 ...state,
-            //     theList: state.theList.map((index, item) => (index === payload.index) ?{...payload.item, finishstate:1}: state.theList)
-            theList: state.theList.map((index, item) => (item == payload.item ) ? {...item, finishstate:1}: {...item, finishstate:1} ) 
-             }
+                theList: state.theList.map((currentElement, index) => ((index === payload.index ) ? {...payload.item, finishstate:1}: currentElement ))
+        }
+
+        case TypeofToDoList.DELEITEM:
+            return{
+                ...state,
+                theList: state.theList.filter((item,index)=> payload.index !== index)
+            }
+
+        case TypeofToDoList.HANDLINGEDIT:
+            return{
+                ...state,
+                handleUpdate: (payload.item.handleUpdate === 0)
+                ? {...payload.item, handleUpdate:1} :{...payload.item, handleUpdate:0}                
+            }
         
         default:
             return state;
