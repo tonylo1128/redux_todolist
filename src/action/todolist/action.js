@@ -7,6 +7,13 @@ export function handleInputFun(inputVar) {
   };
 }
 
+export function handleInputFun2(inputVar) {
+  return {
+    type: todolistType.HANDLE_INPUT2,
+    payload: inputVar
+  };
+}
+
 export function addItemToTheList(inputTemp) {
   return {
     type: todolistType.ADD_ITEM,
@@ -34,5 +41,12 @@ export function makeAsDoneFun(index, item ) {
     return{
       type: todolistType.HANDLINGEDIT,
       payload: {item, index}
+    }
+  }
+
+  export function sendFinishUpdate(item, index, inputTemp){
+    return{
+      type: todolistType.FINISHUPDATE,
+      payload: {item, index, inputTemp}
     }
   }

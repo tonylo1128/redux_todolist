@@ -10,9 +10,12 @@ function ListItem({
   TheList,
   makeAsDoneFun,
   deleItemFun,
-  handleInputVar,
+  handleInputVar2,
+  tempTestForShowInout2,
   handleInputFun,
-  handleEditFun
+  handleInputFun2,
+  handleEditFun,
+  sendFinishUpdate
 }) {
   
   return (
@@ -32,7 +35,8 @@ function ListItem({
 
 
 
-                    {console.log("the finishState update value = ", item.finishstate)}
+                    {console.log("the ITEM = ", item)}
+                    {console.log("This is the list", TheList)}
                     {console.log("the handle update value = ", item.handleUpdate)}
 
                     {item.handleUpdate === 0 ? (
@@ -45,8 +49,8 @@ function ListItem({
                     ) : (
                       <input
                         type="text"
-                        value={handleInputVar}
-                        onChange={event => handleInputFun(event.target.value)}
+                        value={handleInputVar2}
+                        onChange={event => handleInputFun2(event.target.value)}
                       />
                     )}
                   </Col>
@@ -61,8 +65,17 @@ function ListItem({
                       "This is the item's state: ",
                       item.finishstate
                     )}
+                        
+                    {
+                      console.log(
+                        TheList.map((item, index)=> item.handleUpdate===0? console.log("ZEROOOOOOO ARRRRR"):console.log("NOT ZEROOOOOOOOOOOOOOO"))
+                    )}
 
-                    <Button onClick={()=>handleEditFun(item, index)} variant="secondary">Update</Button>
+                    
+                    {item.handleUpdate === 0
+                    ? <Button onClick={()=>handleEditFun(item, index)} variant="secondary">Update</Button>
+                    : <Button onClick={()=>sendFinishUpdate(item, index, handleInputVar2)} variant="primary">Submit</Button>
+                    }
 
                     <Button
                       onClick={() => deleItemFun(item, index)}
@@ -81,6 +94,7 @@ function ListItem({
       </Card>
       <br />
       <h1>Let see: {tempTestForShowInout}</h1>
+      <h1>Let see 2: {tempTestForShowInout2}</h1>
     </div>
   );
 }
@@ -88,19 +102,32 @@ function ListItem({
 const mapStateToProps = state => ({
   // theItemOfTheList: state.todolistReducer.Item.theItem,
   tempTestForShowInout: state.todolistReducer.handleInputVar,
+  tempTestForShowInout2: state.todolistReducer.handleInputVar2,
   TheList: state.todolistReducer.theList,
-  handleInputVar: state.todolistReducer.handleInputVar
+  handleInputVar2: state.todolistReducer.handleInputVar2
 });
 
 const mapsStateToAction = dispatch => ({
   makeAsDoneFun: (item, index) =>
     dispatch(actionForToDoList.makeAsDoneFun(item, index)),
+
   deleItemFun: (item, index) =>
     dispatch(actionForToDoList.deleItemFun(item, index)),
+
   handleInputFun: tempInput =>
     dispatch(actionForToDoList.handleInputFun(tempInput)),
-  handleEditFun: (item, index) => dispatch(actionForToDoList.handleEditFun(item, index))
+
+    handleInputFun2: tempInput =>
+    dispatch(actionForToDoList.handleInputFun2(tempInput)), 
+
+  handleEditFun: (item, index) => dispatch(actionForToDoList.handleEditFun(item, index)),
+
+  addItemFun: inputTemp => dispatch(actionForToDoList.addItemToTheList(inputTemp)),
+
+  sendFinishUpdate: (item, index, inputTemp) => dispatch(actionForToDoList.sendFinishUpdate(item, index, inputTemp))
 });
+
+
 
 export default connect(
   mapStateToProps,
