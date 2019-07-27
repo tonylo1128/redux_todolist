@@ -3,11 +3,11 @@ import * as actionForToDoList from "./action/todolist/action";
 import { connect } from "react-redux";
 import Card from "react-bootstrap/Card";
 import { Button, ListGroup, Col, Row, Container } from "react-bootstrap";
-import ListItemForNo from "./ListItemForNo"
+import ListItem from "./ListItem"
 
 
 
-function ListItem({
+function ListItemForNo({
   theItemOfTheList,
   tempTestForShowInout,
   TheList,
@@ -23,12 +23,11 @@ function ListItem({
   
   return (
     <div>
-      
-      <Card bg="danger">
-        <Card.Header>Havent Finish</Card.Header>
+      <Card bg="primary">
+        <Card.Header>Finished</Card.Header>
         <ListGroup variant="flush">
-        {TheList.map((item, index) =>
-            item.finishstate === 0 ? (
+          {TheList.map((item, index) =>
+            item.finishstate === 1 ? (
               <Container>
                 <Row className="justify-content-md-center">
                   <Col>
@@ -60,8 +59,8 @@ function ListItem({
                   </Col>
                   <Col>
                     {/* <Button onClick={()=>makeAsDoneFun(item, index)}>Make as Done</Button> */}
-                    <Button onClick={() => makeAsDoneFun(index, item)}>
-                      Make as Done
+                    <Button variant="info" onClick={() => makeAsDoneFun(index, item)}>
+                      Make as Un-Done
                     </Button>
                     
                         
@@ -83,13 +82,11 @@ function ListItem({
                 </Row>
               </Container>
             ) : (
-              <div></div>
+                <div></div>
             )
-            )}
+          )}
         </ListGroup>
       </Card>
-
-
       <br />
       {/* <h1>Let see: {tempTestForShowInout}</h1>
       <h1>Let see 2: {tempTestForShowInout2}</h1> */}
@@ -131,4 +128,4 @@ const mapsStateToAction = dispatch => ({
 export default connect(
   mapStateToProps,
   mapsStateToAction
-)(ListItem);
+)(ListItemForNo);

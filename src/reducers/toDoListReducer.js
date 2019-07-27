@@ -39,8 +39,15 @@ export default function(state = initState, {type, payload}){
             };
         case TypeofToDoList.MAKEASDONE:
             return{
+                // ...state,
+                // theList: state.theList.map((currentElement, index) => ((index === payload.index ) 
+                // ? {...payload.item, finishstate:1}: currentElement ))
+
                 ...state,
-                theList: state.theList.map((currentElement, index) => ((index === payload.index ) ? {...payload.item, finishstate:1}: currentElement ))
+                theList: state.theList.map((currentElement, index) => ((index === payload.index ) 
+                ? {...payload.item, 
+                    finishstate: payload.item.finishstate === 0? 1:0
+                }: currentElement ))
         }
 
         case TypeofToDoList.DELEITEM:
@@ -70,21 +77,18 @@ export default function(state = initState, {type, payload}){
                 theList: state.theList.map((item, index) => (index === payload.index)
                 ?
                 { ...payload.item, 
-                    theItem : state.handleInputVar2  }:item),
+                    theItem : payload.inputTemp, handleUpdate: 0  }:item)
 
 
-                    //上面個個位，屌，改緊都唔撚岩，唔知錯咩9   T.T
                 
-                ...state,
-                theList: state.theList.map((item, index) => (index === payload.index ) 
-                ? 
-                {...payload.item, 
-                    handleUpdate: item.handleUpdate === 1 ? 0 : 1 }: item )
-                
-        
 
+                    
+                
+                
                 
             }
+
+   
         
         default:
             return state;
